@@ -1,0 +1,6 @@
+name: MasterControl
+version: "1.2-BETA"
+author: qr0
+loadbefore: [Litebans]
+main: net.excentrix.mastercontrol.MasterControl
+description: MasterControl

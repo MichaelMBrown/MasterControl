@@ -7,8 +7,8 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class staffchat extends Command {
 
-    public staffchat() {
-        super("sc");
+    public staffchat(String name) {
+        super(name);
     }
 
     /**

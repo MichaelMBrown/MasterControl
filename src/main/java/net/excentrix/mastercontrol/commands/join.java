@@ -32,8 +32,7 @@ public class join extends Command {
                     ServerInfo destination = ProxyServer.getInstance().getServerInfo(args[0]);
                     if (destination == null) {
                         MCUtils.errorMessage(player, "That server doesn't exist!");
-                    } else
-                        MCUtils.informativeMessage(player, "&6Sending you to: " + ChatColor.AQUA + destination.getName());
+                    }
                     player.connect(destination);
                 }
             } else MCUtils.errorMessage(player, "You are not allowed to join this server!");

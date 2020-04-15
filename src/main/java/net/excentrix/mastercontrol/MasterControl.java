@@ -14,9 +14,11 @@ import net.md_5.bungee.config.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class MasterControl extends Plugin {
     public static ArrayList<String> restrictedServers = new ArrayList<>();
+    public static HashMap<String, Boolean> scEnabled = new HashMap<>();
     private static File file;
     private Configuration configuration;
     private Plugin plugin = this;
@@ -27,13 +29,24 @@ public final class MasterControl extends Plugin {
         getProxy().getPluginManager().registerListener(this, new staffTalk());
         getProxy().getPluginManager().registerListener(this, new staffJoin());
         getProxy().getPluginManager().registerListener(this, new switchServer());
-        getProxy().getPluginManager().registerCommand(this, new staffchat());
+
+        // Administrative Commands
+        getProxy().getPluginManager().registerCommand(this, new staffchat("sc"));
         getProxy().getPluginManager().registerCommand(this, new masterControl());
-        getProxy().getPluginManager().registerCommand(this, new join());
-        getProxy().getPluginManager().registerCommand(this, new lockdown());
+        getProxy().getPluginManager().registerCommand(this, new lock());
+        getProxy().getPluginManager().registerCommand(this, new announce());
+        getProxy().getPluginManager().registerCommand(this, new find("locate"));
+        getProxy().getPluginManager().registerCommand(this, new toggleStaffChat("togglesc", "mastercontrol.use.staffchat", ""));
+
+        //Player Commands
+//        getProxy().getPluginManager().registerCommand(this, new join());
+        getProxy().getPluginManager().registerCommand(this, new info("info"));
+
+        // Direct Join
         getProxy().getPluginManager().registerCommand(this, new hub());
         getProxy().getPluginManager().registerCommand(this, new creative());
         getProxy().getPluginManager().registerCommand(this, new kitpvp());
+        getProxy().getPluginManager().registerCommand(this, new skyblock());
         file = new File(ProxyServer.getInstance().getPluginsFolder() + "/config.yml");
         try {
             if (!file.exists()) {

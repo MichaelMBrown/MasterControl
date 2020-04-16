@@ -4,8 +4,13 @@ import net.excentrix.mastercontrol.commands.*;
 import net.excentrix.mastercontrol.eventListeners.staffJoin;
 import net.excentrix.mastercontrol.eventListeners.staffTalk;
 import net.excentrix.mastercontrol.eventListeners.switchServer;
+import net.excentrix.mastercontrol.quickCommands.creative;
+import net.excentrix.mastercontrol.quickCommands.hub;
+import net.excentrix.mastercontrol.quickCommands.kitpvp;
+import net.excentrix.mastercontrol.quickCommands.skyblock;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -16,15 +21,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public final class MasterControl extends Plugin {
     public static ArrayList<String> restrictedServers = new ArrayList<>();
     public static HashMap<String, Boolean> scEnabled = new HashMap<>();
-    private static File file;
+    @SuppressWarnings("CanBeFinal")
+    public static HashMap<ServerInfo, Boolean> networkedServers = new HashMap<>();
     private Configuration configuration;
-    private Plugin plugin = this;
+    // --Commented out by Inspection (4/16/2020 2:00 AM):private Plugin plugin = this;
 
     @Override
     public void onEnable() {
+        //Setup
+
+        networkedServers.put(ProxyServer.getInstance().getServerInfo("hub"), true);
+        networkedServers.put(ProxyServer.getInstance().getServerInfo("creative"), true);
+        networkedServers.put(ProxyServer.getInstance().getServerInfo("skyblock"), true);
+        networkedServers.put(ProxyServer.getInstance().getServerInfo("kitpvp"), true);
+        networkedServers.put(ProxyServer.getInstance().getServerInfo("prison"), false);
+        networkedServers.put(ProxyServer.getInstance().getServerInfo("dev-a"), false);
+
+
         // Plugin startup logic
         getProxy().getPluginManager().registerListener(this, new staffTalk());
         getProxy().getPluginManager().registerListener(this, new staffJoin());
@@ -43,11 +60,11 @@ public final class MasterControl extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new info("info"));
 
         // Direct Join
-        getProxy().getPluginManager().registerCommand(this, new hub());
-        getProxy().getPluginManager().registerCommand(this, new creative());
-        getProxy().getPluginManager().registerCommand(this, new kitpvp());
-        getProxy().getPluginManager().registerCommand(this, new skyblock());
-        file = new File(ProxyServer.getInstance().getPluginsFolder() + "/config.yml");
+        getProxy().getPluginManager().registerCommand(this, new hub("hub"));
+        getProxy().getPluginManager().registerCommand(this, new creative("creative"));
+        getProxy().getPluginManager().registerCommand(this, new kitpvp("kitpvp"));
+        getProxy().getPluginManager().registerCommand(this, new skyblock("skyblock"));
+        File file = new File(ProxyServer.getInstance().getPluginsFolder() + "/config.yml");
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -66,7 +83,7 @@ public final class MasterControl extends Plugin {
         // Plugin shutdown logic
         getProxy().getLogger().info(ChatColor.translateAlternateColorCodes('&', "Saving all server-states to disk."));
         try {
-            configuration.set("restricted-servers", restrictedServers);
+            configuration.set("restricted-servers", networkedServers);
             getProxy().getLogger().info(ChatColor.translateAlternateColorCodes('&', "&aSave Complete!"));
         } catch (NullPointerException ignored) {
             getProxy().getLogger().warning(ChatColor.translateAlternateColorCodes('&', "&cCould not save server-states to disk, once the proxy"));

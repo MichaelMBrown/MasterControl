@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -22,22 +23,23 @@ public class lock extends Command {
         }
         if (args.length == 0) {
             ProxiedPlayer player = (ProxiedPlayer) sender;
-            if (MasterControl.restrictedServers.contains(player.getServer().getInfo().getName())) {
-                MCUtils.scNotif("console", ChatColor.AQUA + player.getServer().getInfo().getName() + ChatColor.GRAY + " is no longer locked.");
-                MasterControl.restrictedServers.remove(player.getServer().getInfo().getName());
-            } else {
+            if ((MasterControl.networkedServers.get(player.getServer().getInfo()))) {
                 MCUtils.scNotif("console", ChatColor.AQUA + player.getServer().getInfo().getName() + ChatColor.GRAY + " is now locked, and is limited to " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ".");
-                MasterControl.restrictedServers.add(player.getServer().getInfo().getName());
+                MasterControl.networkedServers.put(player.getServer().getInfo(), false);
+            } else {
+                MCUtils.scNotif("console", ChatColor.AQUA + player.getServer().getInfo().getName() + ChatColor.GRAY + " is no longer locked.");
+                MasterControl.networkedServers.put(player.getServer().getInfo(), true);
             }
         } else if (args.length == 1) {
             String selectedServer = args[0].toLowerCase();
             if (ProxyServer.getInstance().getServersCopy().containsKey(selectedServer)) {
-                if (MasterControl.restrictedServers.contains(selectedServer)) {
-                    MCUtils.scNotif("console", ChatColor.AQUA + selectedServer + ChatColor.GRAY + " is no longer locked.");
-                    MasterControl.restrictedServers.remove(selectedServer);
-                } else {
+                ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(selectedServer);
+                if (MasterControl.networkedServers.get(serverInfo)) {
                     MCUtils.scNotif("console", ChatColor.AQUA + selectedServer + ChatColor.GRAY + " is now locked, and is limited to " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ".");
-                    MasterControl.restrictedServers.add(selectedServer);
+                    MasterControl.networkedServers.put(serverInfo, false);
+                } else {
+                    MCUtils.scNotif("console", ChatColor.AQUA + selectedServer + ChatColor.GRAY + " is no longer locked.");
+                    MasterControl.networkedServers.put(serverInfo, true);
                 }
             } else MCUtils.errorMessage((ProxiedPlayer) sender, "That server does not exist in the network!");
 

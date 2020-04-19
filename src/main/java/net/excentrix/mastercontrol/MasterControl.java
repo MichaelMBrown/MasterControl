@@ -6,7 +6,7 @@ import net.excentrix.mastercontrol.eventListeners.staffTalk;
 import net.excentrix.mastercontrol.eventListeners.switchServer;
 import net.excentrix.mastercontrol.quickCommands.creative;
 import net.excentrix.mastercontrol.quickCommands.hub;
-import net.excentrix.mastercontrol.quickCommands.kitpvp;
+import net.excentrix.mastercontrol.quickCommands.prison;
 import net.excentrix.mastercontrol.quickCommands.skyblock;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -37,7 +37,6 @@ public final class MasterControl extends Plugin {
         networkedServers.put(ProxyServer.getInstance().getServerInfo("hub"), true);
         networkedServers.put(ProxyServer.getInstance().getServerInfo("creative"), true);
         networkedServers.put(ProxyServer.getInstance().getServerInfo("skyblock"), true);
-        networkedServers.put(ProxyServer.getInstance().getServerInfo("kitpvp"), true);
         networkedServers.put(ProxyServer.getInstance().getServerInfo("prison"), false);
         networkedServers.put(ProxyServer.getInstance().getServerInfo("dev-a"), false);
 
@@ -62,7 +61,7 @@ public final class MasterControl extends Plugin {
         // Direct Join
         getProxy().getPluginManager().registerCommand(this, new hub("hub"));
         getProxy().getPluginManager().registerCommand(this, new creative("creative"));
-        getProxy().getPluginManager().registerCommand(this, new kitpvp("kitpvp"));
+        getProxy().getPluginManager().registerCommand(this, new prison("prison"));
         getProxy().getPluginManager().registerCommand(this, new skyblock("skyblock"));
         File file = new File(ProxyServer.getInstance().getPluginsFolder() + "/config.yml");
         try {

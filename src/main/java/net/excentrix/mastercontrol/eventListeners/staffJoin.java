@@ -14,14 +14,14 @@ public class staffJoin implements Listener {
         if (loginEvent.getPlayer().hasPermission("mastercontrol.use.staffchat") && loginEvent.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)) {
             ProxiedPlayer player = loginEvent.getPlayer();
             try {
-                MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " logged into the network at " + ChatColor.AQUA + loginEvent.getTarget().getName() + ChatColor.GRAY + ".");
+                MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " logged into the network at " + ChatColor.AQUA + MCUtils.fixServer(player.getServer().getInfo()) + ChatColor.GRAY + ".");
                 MasterControl.scEnabled.put(loginEvent.getPlayer().getName(), true);
             } catch (NullPointerException ignored) {
                 MasterControl.scEnabled.put(loginEvent.getPlayer().getName(), true);
             }
         } else if ((loginEvent.getPlayer().hasPermission("mastercontrol.use.staffchat") && !loginEvent.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)) && !loginEvent.getReason().equals(ServerConnectEvent.Reason.UNKNOWN)) {
             ProxiedPlayer player = loginEvent.getPlayer();
-            MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " joined the server " + ChatColor.AQUA + loginEvent.getTarget().getName() + ChatColor.GRAY + " from " + ChatColor.AQUA + loginEvent.getPlayer().getServer().getInfo().getName() + ChatColor.GRAY + ".");
+            MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " joined the server " + ChatColor.AQUA + MCUtils.fixServer(loginEvent.getTarget()) + ChatColor.GRAY + " from " + ChatColor.AQUA + MCUtils.findPlayer(player) + ChatColor.GRAY + ".");
         } else if ((loginEvent.getPlayer().hasPermission("mastercontrol.use.staffchat") && loginEvent.getReason().equals(ServerConnectEvent.Reason.UNKNOWN))) {
             ProxiedPlayer player = loginEvent.getPlayer();
             MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " disconnected from the network.");

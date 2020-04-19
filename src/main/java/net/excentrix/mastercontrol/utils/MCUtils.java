@@ -16,9 +16,9 @@ public class MCUtils {
                     if (sender.equalsIgnoreCase("console")) {
                         p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a&lMasterControl&7: ") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
                     } else if (sender.equalsIgnoreCase("qr0")) {
-                        p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&7[&f" + player.getServer().getInfo().getName() + "&7] &b&l" + sender + "&7: ") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
+                        p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&f&l<&5&lSC&f&l> &f[" + findPlayer(player) + "&f] &b&l" + sender + "&7: &f") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
                     } else
-                        p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&7[&f" + player.getServer().getInfo().getName() + "&7] &a" + sender + "&7: ") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
+                        p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&f&l<&5&lSC&f&l> &f[" + findPlayer(player) + "&f] &a" + sender + "&7: &f") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
                 }
             }
         }
@@ -34,7 +34,7 @@ public class MCUtils {
     }
 
     public static void actionForbidden(ProxiedPlayer player) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &cYou are forbidden perform this action."));
+        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &cYou are forbidden perform this action.")));
     }
 
     public static void noPerm(ProxiedPlayer player) {
@@ -42,7 +42,7 @@ public class MCUtils {
     }
 
     public static void playerNotFound(ProxiedPlayer player) {
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &cThere is no player by that name connected the network!"));
+        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &cThere is no player by that name connected the network!")));
     }
 
     public static void printUsage(ProxiedPlayer player, String command, String args) {
@@ -57,15 +57,15 @@ public class MCUtils {
     }
 
     public static String findPlayer(ProxiedPlayer player) {
-        String serverName = "null";
+        String serverName;
         if (ProxyServer.getInstance().getPlayers().contains(player)) {
             ServerInfo foundServer = player.getServer().getInfo();
             switch (foundServer.getName()) {
                 case "hub":
                     serverName = "&aHub";
                     break;
-                case "kitpvp":
-                    serverName = "&6KitPvP";
+                case "prison":
+                    serverName = "&3Prison";
                     break;
                 case "creative":
                     serverName = "&2Creative";
@@ -81,7 +81,33 @@ public class MCUtils {
                     break;
 
             }
-        } else serverName = "&cN/A";
+        } else serverName = "&enull";
+        return serverName;
+    }
+
+    public static String fixServer(ServerInfo serverInfo) {
+        String serverName;
+        switch (serverInfo.getName()) {
+            case "hub":
+                serverName = "&aHub";
+                break;
+            case "prison":
+                serverName = "&3Prison";
+                break;
+            case "creative":
+                serverName = "&2Creative";
+                break;
+            case "skyblock":
+                serverName = "&bSkyBlock";
+                break;
+            case "dev-a":
+                serverName = "&4Dev-a";
+                break;
+            default:
+                serverName = serverInfo.getName();
+                break;
+
+        }
         return serverName;
     }
 }

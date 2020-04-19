@@ -9,8 +9,8 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
-public class kitpvp extends Command {
-    public kitpvp(String name) {
+public class prison extends Command {
+    public prison(String name) {
         super(name);
     }
 
@@ -21,10 +21,10 @@ public class kitpvp extends Command {
             return;
         }
         ProxiedPlayer player = (ProxiedPlayer) sender;
-        if (player.getServer().getInfo().getName().equalsIgnoreCase("kitpvp")) {
+        if (player.getServer().getInfo().getName().equalsIgnoreCase("prison")) {
             MCUtils.errorMessage(player, "You're already connected to this server!");
         } else {
-            ServerInfo destination = ProxyServer.getInstance().getServerInfo("kitpvp");
+            ServerInfo destination = ProxyServer.getInstance().getServerInfo("prison");
             MCUtils.informativeMessage(player, "&7Attempting to send you to: " + ChatColor.AQUA + destination.getName());
             player.connect(destination);
         }

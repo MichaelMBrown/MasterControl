@@ -60,34 +60,14 @@ public class MCUtils {
         String serverName;
         if (ProxyServer.getInstance().getPlayers().contains(player)) {
             ServerInfo foundServer = player.getServer().getInfo();
-            switch (foundServer.getName()) {
-                case "hub":
-                    serverName = "&aHub";
-                    break;
-                case "prison":
-                    serverName = "&3Prison";
-                    break;
-                case "creative":
-                    serverName = "&2Creative";
-                    break;
-                case "skyblock":
-                    serverName = "&bSkyBlock";
-                    break;
-                case "dev-a":
-                    serverName = "&cdev-a";
-                    break;
-                default:
-                    serverName = foundServer.getName();
-                    break;
-
-            }
+            serverName = getString(foundServer);
         } else serverName = "&enull";
         return serverName;
     }
 
-    public static String fixServer(ServerInfo serverInfo) {
+    private static String getString(ServerInfo foundServer) {
         String serverName;
-        switch (serverInfo.getName()) {
+        switch (foundServer.getName()) {
             case "hub":
                 serverName = "&aHub";
                 break;
@@ -95,7 +75,7 @@ public class MCUtils {
                 serverName = "&3Prison";
                 break;
             case "creative":
-                serverName = "&2Creative";
+                serverName = "&eCreative";
                 break;
             case "skyblock":
                 serverName = "&bSkyBlock";
@@ -104,10 +84,14 @@ public class MCUtils {
                 serverName = "&4Dev-a";
                 break;
             default:
-                serverName = serverInfo.getName();
+                serverName = foundServer.getName();
                 break;
 
         }
         return serverName;
+    }
+
+    public static String fixServer(ServerInfo serverInfo) {
+        return getString(serverInfo);
     }
 }

@@ -1,3 +1,4 @@
+net\excentrix\mastercontrol\commands\onlineStaff.class
 net\excentrix\mastercontrol\quickCommands\hub.class
 net\excentrix\mastercontrol\eventListeners\staffJoin.class
 net\excentrix\mastercontrol\quickCommands\creative.class

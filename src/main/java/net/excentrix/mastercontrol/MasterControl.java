@@ -51,12 +51,13 @@ public final class MasterControl extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new masterControl());
         getProxy().getPluginManager().registerCommand(this, new lock());
         getProxy().getPluginManager().registerCommand(this, new announce());
-        getProxy().getPluginManager().registerCommand(this, new find("locate"));
-        getProxy().getPluginManager().registerCommand(this, new toggleStaffChat("togglesc", "mastercontrol.use.staffchat", ""));
+        getProxy().getPluginManager().registerCommand(this, new find("find"));
+        getProxy().getPluginManager().registerCommand(this, new toggleStaffChat("togglesc", "mastercontrol.use.staffchat", "hush"));
 
         //Player Commands
 //        getProxy().getPluginManager().registerCommand(this, new join());
         getProxy().getPluginManager().registerCommand(this, new info("info"));
+//        getProxy().getPluginManager().registerCommand(this, new onlineStaff("onlinestaff"));
 
         // Direct Join
         getProxy().getPluginManager().registerCommand(this, new hub("hub"));

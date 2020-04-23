@@ -24,10 +24,10 @@ public class lock extends Command {
         if (args.length == 0) {
             ProxiedPlayer player = (ProxiedPlayer) sender;
             if ((MasterControl.networkedServers.get(player.getServer().getInfo()))) {
-                MCUtils.scNotif("console", ChatColor.AQUA + player.getServer().getInfo().getName() + ChatColor.GRAY + " is now locked, and is limited to " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ".");
+                MCUtils.scNotif("console", ChatColor.AQUA + MCUtils.findPlayer(player) + ChatColor.GRAY + " is now locked, and is limited to " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ".");
                 MasterControl.networkedServers.put(player.getServer().getInfo(), false);
             } else {
-                MCUtils.scNotif("console", ChatColor.AQUA + player.getServer().getInfo().getName() + ChatColor.GRAY + " is no longer locked.");
+                MCUtils.scNotif("console", ChatColor.AQUA + MCUtils.findPlayer(player) + ChatColor.GRAY + " is no longer locked.");
                 MasterControl.networkedServers.put(player.getServer().getInfo(), true);
             }
         } else if (args.length == 1) {
@@ -35,10 +35,10 @@ public class lock extends Command {
             if (ProxyServer.getInstance().getServersCopy().containsKey(selectedServer)) {
                 ServerInfo serverInfo = ProxyServer.getInstance().getServerInfo(selectedServer);
                 if (MasterControl.networkedServers.get(serverInfo)) {
-                    MCUtils.scNotif("console", ChatColor.AQUA + selectedServer + ChatColor.GRAY + " is now locked, and is limited to " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ".");
+                    MCUtils.scNotif("console", ChatColor.AQUA + MCUtils.fixServer(serverInfo) + ChatColor.GRAY + " is now locked, and is limited to " + ChatColor.GOLD + "Staff" + ChatColor.GRAY + ".");
                     MasterControl.networkedServers.put(serverInfo, false);
                 } else {
-                    MCUtils.scNotif("console", ChatColor.AQUA + selectedServer + ChatColor.GRAY + " is no longer locked.");
+                    MCUtils.scNotif("console", ChatColor.AQUA + MCUtils.fixServer(serverInfo) + ChatColor.GRAY + " is no longer locked.");
                     MasterControl.networkedServers.put(serverInfo, true);
                 }
             } else MCUtils.errorMessage((ProxiedPlayer) sender, "That server does not exist in the network!");

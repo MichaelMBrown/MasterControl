@@ -15,14 +15,14 @@ public class find extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender.hasPermission("mastercontrol.command.locate")) {
+        if (sender.hasPermission("mastercontrol.command.find")) {
             if (args.length >= 1) {
                 ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(args[0]);
                 sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&8Processing Request...")));
                 if (proxiedPlayer != null) {
-                    MCUtils.informativeMessage((ProxiedPlayer) sender, "&3" + proxiedPlayer.getName() + " &fis &aonline&f and connected to " + MCUtils.findPlayer(proxiedPlayer));
+                    MCUtils.informativeMessage((ProxiedPlayer) sender, "&6" + proxiedPlayer.getName() + " &fis &aonline&f and connected to " + MCUtils.findPlayer(proxiedPlayer));
                 } else MCUtils.playerNotFound((ProxiedPlayer) sender);
-            } else MCUtils.printUsage((ProxiedPlayer) sender, "locate", "<player>");
+            } else MCUtils.printUsage((ProxiedPlayer) sender, "find", "<player>");
         }
     }
 }

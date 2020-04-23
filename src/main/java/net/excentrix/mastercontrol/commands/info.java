@@ -13,8 +13,7 @@ public class info extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer) {
-            MCUtils.informativeMessage((ProxiedPlayer) sender, "&7You're currently connected to &b" + ((ProxiedPlayer) sender).getServer().getInfo().getName() +
-                    "&7 and your ping is currently &b" + ((ProxiedPlayer) sender).getPing() + "&7ms");
+            MCUtils.informativeMessage((ProxiedPlayer) sender, "&7You're currently connected to &b" + MCUtils.findPlayer((ProxiedPlayer) sender) + "&7 and your ping is currently &b" + ((ProxiedPlayer) sender).getPing() + "&7ms");
         }
     }
 }

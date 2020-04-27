@@ -25,6 +25,7 @@ import java.util.HashMap;
 public final class MasterControl extends Plugin {
     public static ArrayList<String> restrictedServers = new ArrayList<>();
     public static HashMap<String, Boolean> scEnabled = new HashMap<>();
+    public static HashMap<String, Boolean> scToggled = new HashMap<>();
     @SuppressWarnings("CanBeFinal")
     public static HashMap<ServerInfo, Boolean> networkedServers = new HashMap<>();
     private Configuration configuration;
@@ -47,7 +48,7 @@ public final class MasterControl extends Plugin {
         getProxy().getPluginManager().registerListener(this, new switchServer());
 
         // Administrative Commands
-        getProxy().getPluginManager().registerCommand(this, new staffchat("sc"));
+        getProxy().getPluginManager().registerCommand(this, new staffchat("sc", "mastercontrol.use.staffchat", "staffchat", "staff"));
         getProxy().getPluginManager().registerCommand(this, new masterControl());
         getProxy().getPluginManager().registerCommand(this, new lock());
         getProxy().getPluginManager().registerCommand(this, new announce());

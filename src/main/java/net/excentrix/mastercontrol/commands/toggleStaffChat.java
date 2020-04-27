@@ -18,10 +18,10 @@ public class toggleStaffChat extends Command {
         }
         if (MasterControl.scEnabled.get(sender.getName())) {
             MasterControl.scEnabled.put(sender.getName(), false);
-            MCUtils.informativeMessage((ProxiedPlayer) sender, "You've exited the staff chat.");
+            MCUtils.informativeMessage((ProxiedPlayer) sender, "You have hidden staff messages.");
         } else {
             MasterControl.scEnabled.put(sender.getName(), true);
-            MCUtils.informativeMessage((ProxiedPlayer) sender, "You've entered the staff chat.");
+            MCUtils.informativeMessage((ProxiedPlayer) sender, "You're now receiving staff messages.");
         }
     }
 }

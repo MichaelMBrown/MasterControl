@@ -1,5 +1,5 @@
 name: MasterControl
-version: "1.4"
+version: "1.5"
 author: qr0
 loadbefore: [Litebans]
 main: net.excentrix.mastercontrol.MasterControl

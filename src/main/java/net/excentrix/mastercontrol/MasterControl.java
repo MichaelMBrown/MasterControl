@@ -48,7 +48,7 @@ public final class MasterControl extends Plugin {
         getProxy().getPluginManager().registerListener(this, new switchServer());
 
         // Administrative Commands
-        getProxy().getPluginManager().registerCommand(this, new staffchat("sc", "mastercontrol.use.staffchat", "staffchat", "staff"));
+        getProxy().getPluginManager().registerCommand(this, new staffchat("sc", "mastercontrol.use.staffchat", "staffchat, staff"));
         getProxy().getPluginManager().registerCommand(this, new masterControl());
         getProxy().getPluginManager().registerCommand(this, new lock());
         getProxy().getPluginManager().registerCommand(this, new announce());

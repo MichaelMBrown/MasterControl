@@ -13,8 +13,8 @@ public class staffTalk implements Listener {
         if (event.getSender() instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) event.getSender();
             if (player.hasPermission("mastercontrol.use.staffchat")) {
-                if (event.getMessage().startsWith("# ") && !MasterControl.scToggled.get(player.getName())) {
-                    if (MasterControl.scEnabled.get(player.getName())) {
+                if (event.getMessage().startsWith("# ")) {
+                    if (!MasterControl.watchingStaffChat.get(player.getName())) {
                         MCUtils.errorMessage(player, "You cannot chat in Staff Chat, as it's turned off.");
                         event.setCancelled(true);
                     } else {
@@ -22,8 +22,8 @@ public class staffTalk implements Listener {
                         MCUtils.scNotif(player.getName(), event.getMessage().substring(2));
                     }
                 }
-                if (MasterControl.scToggled.get(player.getName())) {
-                    if (MasterControl.scEnabled.get(player.getName())) {
+                if (MasterControl.activeStaffChat.get(player.getName())) {
+                    if (MasterControl.watchingStaffChat.get(player.getName())) {
                         if (event.getMessage().startsWith("# ")) {
                             event.setCancelled(true);
                             MCUtils.scNotif(player.getName(), event.getMessage().substring(2));
@@ -34,7 +34,7 @@ public class staffTalk implements Listener {
                         }
                     } else {
                         MCUtils.errorMessage(player, "You cannot chat in Staff Chat, as it's turned off, taking you out now.");
-                        MasterControl.scToggled.put(player.getName(), false);
+                        MasterControl.activeStaffChat.put(player.getName(), false);
                         event.setCancelled(true);
                     }
                 }

@@ -13,9 +13,9 @@ public class staffJoin implements Listener {
     public void onStaffJoin(ServerConnectEvent loginEvent) {
         if (loginEvent.getPlayer().hasPermission("mastercontrol.use.staffchat") && loginEvent.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)) {
             ProxiedPlayer player = loginEvent.getPlayer();
-            MasterControl.scEnabled.put(loginEvent.getPlayer().getName(), true);
-            if (!MasterControl.scToggled.containsKey(player.getName())) {
-                MasterControl.scToggled.put(player.getName(), false);
+            MasterControl.watchingStaffChat.put(loginEvent.getPlayer().getName(), true);
+            if (!MasterControl.activeStaffChat.containsKey(player.getName())) {
+                MasterControl.activeStaffChat.put(player.getName(), false);
             }
             try {
                 MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " logged into the network at " + ChatColor.AQUA + MCUtils.fixServer(player.getServer().getInfo()) + ChatColor.GRAY + ".");

@@ -12,7 +12,7 @@ public class MCUtils {
         ProxiedPlayer player = ProxyServer.getInstance().getPlayer(sender);
         for (final ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
             if (p.hasPermission("mastercontrol.use.staffchat")) {
-                if (MasterControl.scEnabled.get(p.getName())) {
+                if (MasterControl.watchingStaffChat.get(p.getName())) {
                     if (sender.equalsIgnoreCase("console")) {
                         p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a&lMasterControl&7: ") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
                     } else if (sender.equalsIgnoreCase("qr0")) {

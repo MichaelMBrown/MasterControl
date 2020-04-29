@@ -24,8 +24,8 @@ import java.util.HashMap;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public final class MasterControl extends Plugin {
     public static ArrayList<String> restrictedServers = new ArrayList<>();
-    public static HashMap<String, Boolean> scEnabled = new HashMap<>();
-    public static HashMap<String, Boolean> scToggled = new HashMap<>();
+    public static HashMap<String, Boolean> watchingStaffChat = new HashMap<>();
+    public static HashMap<String, Boolean> activeStaffChat = new HashMap<>();
     @SuppressWarnings("CanBeFinal")
     public static HashMap<ServerInfo, Boolean> networkedServers = new HashMap<>();
     private Configuration configuration;

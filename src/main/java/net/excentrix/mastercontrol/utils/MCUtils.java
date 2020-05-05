@@ -1,6 +1,8 @@
 package net.excentrix.mastercontrol.utils;
 
 import net.excentrix.mastercontrol.MasterControl;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -8,20 +10,26 @@ import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MCUtils {
+    static LuckPerms api = LuckPermsProvider.get();
     public static void scNotif(String sender, String message) {
         ProxiedPlayer player = ProxyServer.getInstance().getPlayer(sender);
-        for (final ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-            if (p.hasPermission("mastercontrol.use.staffchat")) {
-                if (MasterControl.watchingStaffChat.get(p.getName())) {
-                    if (sender.equalsIgnoreCase("console")) {
-                        p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a&lMasterControl&7: ") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
-                    } else if (sender.equalsIgnoreCase("qr0")) {
-                        p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&f&l<&5&lSC&f&l> &f[" + findPlayer(player) + "&f] &b&l" + sender + "&7: &f") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
-                    } else
-                        p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&f&l<&5&lSC&f&l> &f[" + findPlayer(player) + "&f] &a" + sender + "&7: &f") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
+        if (sender.equalsIgnoreCase("console")) {
+            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+                if (p.hasPermission("mastercontrol.notify")) {
+                    p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a&lMasterControl&7: ") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
                 }
             }
-        }
+        } else
+            for (final ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+                if (p.hasPermission("mastercontrol.use.staffchat")) {
+                    if (MasterControl.watchingStaffChat.get(p.getName())) {
+                        if (sender.equalsIgnoreCase("qr0")) {
+                            p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&f&l<&5&lSC&f&l> &f[" + findPlayer(player) + "&f] &b&l" + sender + "&7: &f") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
+                        } else
+                            p.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&f&l<&5&lSC&f&l> &f[" + findPlayer(player) + "&f] &a" + sender + "&7: &f") + ChatColor.translateAlternateColorCodes('&', String.join(" ", message))));
+                    }
+                }
+            }
         ProxyServer.getInstance().getLogger().info(ChatColor.translateAlternateColorCodes('&', "&f&l<&5&lSC&f&l> &a" + sender + "&f: " + message));
     }
 
@@ -63,6 +71,12 @@ public class MCUtils {
             serverName = getString(foundServer);
         } else serverName = "&enull";
         return serverName;
+    }
+
+    public static String getRank(String player) {
+        String rank;
+        rank = api.getUserManager().getUser(player).getPrimaryGroup();
+        return rank;
     }
 
     private static String getString(ServerInfo foundServer) {

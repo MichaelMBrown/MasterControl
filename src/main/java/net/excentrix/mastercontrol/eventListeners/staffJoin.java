@@ -18,12 +18,12 @@ public class staffJoin implements Listener {
                 MasterControl.activeStaffChat.put(player.getName(), false);
             }
             try {
-                MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " logged into the network at " + ChatColor.AQUA + MCUtils.fixServer(player.getServer().getInfo()) + ChatColor.GRAY + ".");
+                MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " logged into the network at " + ChatColor.AQUA + MCUtils.fixServer(loginEvent.getTarget()) + ChatColor.GRAY + ".");
             } catch (NullPointerException ignored) {
             }
         } else if ((loginEvent.getPlayer().hasPermission("mastercontrol.use.staffchat") && !loginEvent.getReason().equals(ServerConnectEvent.Reason.JOIN_PROXY)) && !loginEvent.getReason().equals(ServerConnectEvent.Reason.UNKNOWN)) {
             ProxiedPlayer player = loginEvent.getPlayer();
-            MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " joined the server " + ChatColor.AQUA + MCUtils.fixServer(loginEvent.getTarget()) + ChatColor.GRAY + " from " + ChatColor.AQUA + MCUtils.findPlayer(player) + ChatColor.GRAY + ".");
+            MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " joined " + ChatColor.AQUA + MCUtils.fixServer(loginEvent.getTarget()) + ChatColor.GRAY + " from " + ChatColor.AQUA + MCUtils.findPlayer(player) + ChatColor.GRAY + ".");
         } else if ((loginEvent.getPlayer().hasPermission("mastercontrol.use.staffchat") && loginEvent.getReason().equals(ServerConnectEvent.Reason.UNKNOWN))) {
             ProxiedPlayer player = loginEvent.getPlayer();
             MCUtils.scNotif("console", ChatColor.YELLOW + player.getName() + ChatColor.GRAY + " disconnected from the network.");

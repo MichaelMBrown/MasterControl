@@ -10,8 +10,10 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class creative extends Command {
-    public creative(String name) {
-        super(name);
+
+
+    public creative(String name, String permission, String... aliases) {
+        super(name, permission, aliases);
     }
 
     @Override

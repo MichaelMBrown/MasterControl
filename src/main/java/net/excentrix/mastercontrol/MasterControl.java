@@ -48,21 +48,22 @@ public final class MasterControl extends Plugin {
         getProxy().getPluginManager().registerListener(this, new switchServer());
 
         // Administrative Commands
-        getProxy().getPluginManager().registerCommand(this, new staffchat("sc", "mastercontrol.use.staffchat", "staffchat, staff"));
+        getProxy().getPluginManager().registerCommand(this, new staffchat("sc", "mastercontrol.use.staffchat", "staffchat", "staff"));
+        getProxy().getPluginManager().registerCommand(this, new grant("grant", "mastercontrol.admin.grant"));
         getProxy().getPluginManager().registerCommand(this, new masterControl());
         getProxy().getPluginManager().registerCommand(this, new lock());
         getProxy().getPluginManager().registerCommand(this, new announce());
-        getProxy().getPluginManager().registerCommand(this, new find("find"));
+        getProxy().getPluginManager().registerCommand(this, new find("find", "mastercontrol.command.find", "lookup"));
         getProxy().getPluginManager().registerCommand(this, new toggleStaffChat("togglesc", "mastercontrol.use.staffchat", "hush"));
 
-        //Player Commands
+        //ProxiedPlayer Commands
 //        getProxy().getPluginManager().registerCommand(this, new join());
         getProxy().getPluginManager().registerCommand(this, new info("info"));
 //        getProxy().getPluginManager().registerCommand(this, new onlineStaff("onlinestaff"));
 
         // Direct Join
         getProxy().getPluginManager().registerCommand(this, new hub("hub"));
-        getProxy().getPluginManager().registerCommand(this, new creative("creative"));
+        getProxy().getPluginManager().registerCommand(this, new creative("creative", "", "plots"));
         getProxy().getPluginManager().registerCommand(this, new prison("prison"));
         getProxy().getPluginManager().registerCommand(this, new skyblock("skyblock"));
         File file = new File(ProxyServer.getInstance().getPluginsFolder() + "/config.yml");

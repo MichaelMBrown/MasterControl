@@ -21,8 +21,7 @@ public class staffTalk implements Listener {
                         event.setCancelled(true);
                         MCUtils.scNotif(player.getName(), event.getMessage().substring(2));
                     }
-                }
-                if (MasterControl.activeStaffChat.get(player.getName())) {
+                } else if (MasterControl.activeStaffChat.get(player.getName())) {
                     if (MasterControl.watchingStaffChat.get(player.getName())) {
                         if (event.getMessage().startsWith("# ")) {
                             event.setCancelled(true);

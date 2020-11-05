@@ -11,6 +11,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MCUtils {
     static LuckPerms api = LuckPermsProvider.get();
+
     public static void scNotif(String sender, String message) {
         ProxiedPlayer player = ProxyServer.getInstance().getPlayer(sender);
         if (sender.equalsIgnoreCase("console")) {
@@ -34,23 +35,23 @@ public class MCUtils {
     }
 
     public static void informativeMessage(ProxiedPlayer sender, String message) {
-        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a&lMC &f" + message)));
+        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a&lMC &7» &f" + message)));
     }
 
     public static void errorMessage(ProxiedPlayer sender, String message) {
-        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lMC &c" + message)));
+        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lMC &7» &c" + message)));
     }
 
     public static void actionForbidden(ProxiedPlayer player) {
-        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &cYou are forbidden perform this action.")));
+        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &7» &cYou are forbidden perform this action.")));
     }
 
     public static void noPerm(ProxiedPlayer player) {
-        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &cYou do not have permission for this command!")));
+        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &7» &cYou do not have permission for this command!")));
     }
 
     public static void playerNotFound(ProxiedPlayer player) {
-        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &cThere is no player by that name connected the network!")));
+        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&c&lClarke &7» &cThere is no player by that name connected the network!")));
     }
 
     public static void printUsage(ProxiedPlayer player, String command, String args) {
@@ -97,8 +98,11 @@ public class MCUtils {
             case "dev-a":
                 serverName = "&4Dev-a";
                 break;
+            case "event":
+                serverName = "&6Event";
+                break;
             default:
-                serverName = foundServer.getName();
+                serverName = foundServer.getName().toLowerCase();
                 break;
 
         }

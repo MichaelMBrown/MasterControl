@@ -31,6 +31,6 @@ public class find extends Command {
                 sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', String.format("&6UUID: &f%s", proxiedPlayer.getUniqueId()))));
                 sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', String.format("&6Connected to: %s", MCUtils.fixServer(proxiedPlayer.getServer().getInfo())))));
             } else MCUtils.playerNotFound((ProxiedPlayer) sender);
-            } else MCUtils.printUsage((ProxiedPlayer) sender, "find", "<player>");
+        } else MCUtils.printUsage((ProxiedPlayer) sender, "find", "<player>");
     }
 }

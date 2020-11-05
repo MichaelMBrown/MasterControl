@@ -4,6 +4,7 @@ import net.excentrix.mastercontrol.commands.*;
 import net.excentrix.mastercontrol.eventListeners.staffJoin;
 import net.excentrix.mastercontrol.eventListeners.staffTalk;
 import net.excentrix.mastercontrol.eventListeners.switchServer;
+import net.excentrix.mastercontrol.messagingService.*;
 import net.excentrix.mastercontrol.quickCommands.creative;
 import net.excentrix.mastercontrol.quickCommands.hub;
 import net.excentrix.mastercontrol.quickCommands.prison;
@@ -23,11 +24,13 @@ import java.util.HashMap;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public final class MasterControl extends Plugin {
+    public final static HashMap<ServerInfo, Boolean> networkedServers = new HashMap<>();
     public static ArrayList<String> restrictedServers = new ArrayList<>();
     public static HashMap<String, Boolean> watchingStaffChat = new HashMap<>();
     public static HashMap<String, Boolean> activeStaffChat = new HashMap<>();
-    @SuppressWarnings("CanBeFinal")
-    public static HashMap<ServerInfo, Boolean> networkedServers = new HashMap<>();
+    public static HashMap<String, Boolean> DoNotDisturb = new HashMap<>();
+    public static HashMap<String, Boolean> socialSpy = new HashMap<>();
+    public static HashMap<String, String> replyService = new HashMap<>();
     private Configuration configuration;
     // --Commented out by Inspection (4/16/2020 2:00 AM):private Plugin plugin = this;
 
@@ -40,26 +43,33 @@ public final class MasterControl extends Plugin {
         networkedServers.put(ProxyServer.getInstance().getServerInfo("skyblock"), true);
         networkedServers.put(ProxyServer.getInstance().getServerInfo("prison"), false);
         networkedServers.put(ProxyServer.getInstance().getServerInfo("dev-a"), false);
+        networkedServers.put(ProxyServer.getInstance().getServerInfo("event"), false);
 
 
         // Plugin startup logic
-        getProxy().getPluginManager().registerListener(this, new staffTalk());
+        getProxy().getPluginManager().registerListener(this, new messageService());
         getProxy().getPluginManager().registerListener(this, new staffJoin());
+        getProxy().getPluginManager().registerListener(this, new staffTalk());
         getProxy().getPluginManager().registerListener(this, new switchServer());
 
         // Administrative Commands
         getProxy().getPluginManager().registerCommand(this, new staffchat("sc", "mastercontrol.use.staffchat", "staffchat", "staff"));
         getProxy().getPluginManager().registerCommand(this, new grant("grant", "mastercontrol.admin.grant"));
+        getProxy().getPluginManager().registerCommand(this, new grants("grants", "mastercontrol.admin.grants"));
+        getProxy().getPluginManager().registerCommand(this, new socialspy("socialspy", "mastercontrol.use.adminspying"));
         getProxy().getPluginManager().registerCommand(this, new masterControl());
         getProxy().getPluginManager().registerCommand(this, new lock());
         getProxy().getPluginManager().registerCommand(this, new announce());
         getProxy().getPluginManager().registerCommand(this, new find("find", "mastercontrol.command.find", "lookup"));
-        getProxy().getPluginManager().registerCommand(this, new toggleStaffChat("togglesc", "mastercontrol.use.staffchat", "hush"));
+        getProxy().getPluginManager().registerCommand(this, new toggleStaffChat("tsm", "mastercontrol.use.staffchat", "hush"));
 
         //ProxiedPlayer Commands
 //        getProxy().getPluginManager().registerCommand(this, new join());
         getProxy().getPluginManager().registerCommand(this, new info("info"));
-//        getProxy().getPluginManager().registerCommand(this, new onlineStaff("onlinestaff"));
+        getProxy().getPluginManager().registerCommand(this, new message("message", "", "msg", "emsg", "w", "ew", "whisper", "tell", "ewhisper"));
+        getProxy().getPluginManager().registerCommand(this, new reply("r", "", "reply", "er", "ereply"));
+        getProxy().getPluginManager().registerCommand(this, new togglepm("togglepm", "", "dnd", "donotdisturb", "msgtoggle", "tpm"));
+        //getProxy().getPluginManager().registerCommand(this, new onlineStaff("onlinestaff"));
 
         // Direct Join
         getProxy().getPluginManager().registerCommand(this, new hub("hub"));
@@ -91,6 +101,10 @@ public final class MasterControl extends Plugin {
             getProxy().getLogger().warning(ChatColor.translateAlternateColorCodes('&', "&cCould not save server-states to disk, once the proxy"));
             getProxy().getLogger().warning(ChatColor.translateAlternateColorCodes('&', "&crestarts all servers will be available"));
         }
-
+        DoNotDisturb.clear();
+        watchingStaffChat.clear();
+        activeStaffChat.clear();
+        replyService.clear();
+        socialSpy.clear();
     }
 }
